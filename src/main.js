@@ -8,7 +8,7 @@ import { Toast } from 'vant'
 Vue.use(Toast);
 
 // 引入路由组件
-import router from '@/router/index.js'
+import router from '@/router/router.js'
 
 Vue.config.productionTip = false
 

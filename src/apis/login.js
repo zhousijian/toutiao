@@ -1,6 +1,6 @@
-import myaxios from '@/utils/myaxios.js'
+import myaxios from '../utils/myaxion'
 
-export const login = (data)=>{
+export const Login = (data)=>{
     return myaxios({
         method : 'post',
         url : '/login',
