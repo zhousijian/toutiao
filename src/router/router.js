@@ -7,6 +7,7 @@ import VueRouter from 'vue-router'
 // 6.1引入路由所需要映射的组件
 import Login from '@/views/login.vue'   // 登录页面
 import Personal from '@/views/personal.vue'     // 个人中心
+import EditUserInfo from '@/views/editUserInfo.vue'    // 编辑信息
 
 
 // 3挂在==挂载
@@ -26,6 +27,11 @@ let router = new VueRouter({
             name : 'personal',
             path : '/personal/:id',
             component : Personal
+        },
+        {
+            name : 'editUserInfo',
+            path : '/editUserInfo/:id',
+            component : EditUserInfo
         }
     ]
 })

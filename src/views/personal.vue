@@ -1,6 +1,6 @@
 <template>
   <div id="personal">
-    <router-link to="/edit_profile">
+    <router-link :to="`/editUserInfo/${this.userInfo.id}`">
       <div class="profile">
         <!-- $axios.defaults.baseURL读取axios的服务器路径 -->
         <img :src="userInfo.head_img" alt />

@@ -4,8 +4,10 @@ import App from './App.vue'
 // 引入重置样式css
 import '@/style/reset.css'
 
-import { Toast } from 'vant'
-Vue.use(Toast);
+import { Toast,Icon,Uploader } from 'vant'
+Vue.use(Uploader)
+   .use(Icon)
+   .use(Toast);
 
 // 引入路由组件
 import router from '@/router/router.js'
