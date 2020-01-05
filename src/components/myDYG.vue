@@ -1,5 +1,5 @@
 <template>
-  <div class="myDYG">
+  <div class="myDYG" @click="myclick">
     <div class="left">{{left}}</div>
     <div class="right">{{type==='password'?'******':right}}
       <van-icon name="arrow" />
@@ -9,7 +9,12 @@
 
 <script>
 export default {
-  props: ["left", "right","type"]
+  props: ["left", "right","type"],
+  methods: {
+    myclick(){
+      this.$emit('click')
+    }
+  }
 };
 </script>
 
