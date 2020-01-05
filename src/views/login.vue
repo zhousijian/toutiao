@@ -47,9 +47,10 @@ export default {
         
         if(res.data.message == '登录成功'){
           // console.log('登录成功');
-          this.$router.push({name : 'personal'})
+          // this.$router.push({name : 'personal'})
           localStorage.setItem('token',res.data.data.token)
           localStorage.setItem('user',JSON.stringify(res.data.data.user))
+          this.$router.push({name : 'personal'})
         }else {
           this.$toast.fail(res.data.message)
         }
