@@ -3,30 +3,49 @@
     <router-link to="/edit_profile">
       <div class="profile">
         <!-- $axios.defaults.baseURL读取axios的服务器路径 -->
-        <img src="http://img1.imgtn.bdimg.com/it/u=3757784226,1202878475&fm=26&gp=0.jpg" alt />
+        <img :src="userInfo.head_img" alt />
         <div class="profile-center">
           <div class="name">
-            <span class="iconfont iconxingbienan"></span>我就是我
+            <span class="iconfont iconxingbienan"></span>
+            {{userInfo.nickname}}
           </div>
-          <div class="time">2019-9-24</div>
+          <div class="time">{{userInfo.create_date}}</div>
         </div>
         <span class="iconfont iconjiantou1"></span>
       </div>
     </router-link>
-    <myDYG left='我的关注' right='关注的用户'></myDYG>
-    <myDYG left='我的跟帖' right='跟帖/回复'></myDYG>
-    <myDYG left='我的收藏' right='文章/视频'></myDYG>
-    <myDYG left='设置'></myDYG>
+    <myDYG left="我的关注" right="关注的用户"></myDYG>
+    <myDYG left="我的跟帖" right="跟帖/回复"></myDYG>
+    <myDYG left="我的收藏" right="文章/视频"></myDYG>
+    <myDYG left="设置"></myDYG>
     <mybtn class="mybtn">退出</mybtn>
   </div>
 </template>
 
 <script>
-import myDYG from '@/components/myDYG'
-import mybtn from '@/components/mybtn'
+import myDYG from "@/components/myDYG";
+import mybtn from "@/components/mybtn";
+import { getUser } from "@/apis/user";
 export default {
+  data() {
+    return {
+      userInfo: ""
+    };
+  },
   components: {
-    myDYG,mybtn
+    myDYG,
+    mybtn
+  },
+  async mounted() {
+    let res = await getUser(this.$route.params.id);
+    // console.log(res);
+    if (res.data.message == "获取成功") {
+      this.userInfo = res.data.data;
+      this.userInfo.head_img = "http://127.0.0.1:3000" + this.userInfo.head_img;
+      // console.log(this.userInfo);
+    }else {
+      this.$router.push({name:'login'})
+    }
   }
 };
 </script>
@@ -71,7 +90,7 @@ a {
   }
 }
 .mybtn {
-    background-color: red;
-    margin-top: 20px;
-  }
+  background-color: red;
+  margin-top: 20px;
+}
 </stylel>

@@ -23,13 +23,13 @@
 <script>
 import mybtn from "@/components/mybtn.vue";
 import myinput from '@/components/myinput.vue'
-import {Login} from '@/apis/login.js'
+import {Login} from '@/apis/user.js'
 export default {
   data () {
     return {
         user : {
-          username : '',
-          password : ''
+          username : '100861',
+          password : '123'
         }
     }
   },
@@ -43,14 +43,14 @@ export default {
       // console.log(res);
       if(/^(\d{5,6})$|^(1\d{10})$/.test(this.user.username) && /^\S{3,16}$/.test(this.user.password)){
         let res = await Login(this.user)
-        console.log(res);
+        // console.log(res);
         
         if(res.data.message == '登录成功'){
           // console.log('登录成功');
           // this.$router.push({name : 'personal'})
           localStorage.setItem('token',res.data.data.token)
-          localStorage.setItem('user',JSON.stringify(res.data.data.user))
-          this.$router.push({name : 'personal'})
+          localStorage.setItem('id',res.data.data.user.id)
+          this.$router.push({path : `personal/${res.data.data.user.id}`})
         }else {
           this.$toast.fail(res.data.message)
         }
