@@ -49,7 +49,7 @@ export default {
           // console.log('登录成功');
           this.$router.push({name : 'personal'})
           localStorage.setItem('token',res.data.data.token)
-          localStorage.setItem('id',res.data.data.user.id)
+          localStorage.setItem('user',JSON.stringify(res.data.data.user))
         }else {
           this.$toast.fail(res.data.message)
         }

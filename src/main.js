@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-
+// 引入重置样式css
 import '@/style/reset.css'
 
 import { Toast } from 'vant'
