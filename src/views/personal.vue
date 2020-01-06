@@ -9,7 +9,7 @@
             <span class="iconfont iconxingbienan"></span>
             {{userInfo.nickname}}
           </div>
-          <div class="time">{{userInfo.create_date}}</div>
+          <div class="time">{{userInfo.create_date | dateFormat}}</div>
         </div>
         <span class="iconfont iconjiantou1"></span>
       </div>
@@ -26,11 +26,15 @@
 import myDYG from "@/components/myDYG";
 import mybtn from "@/components/mybtn";
 import { getUser } from "@/apis/user";
+import { dateFormat } from '@/filters/myfilters'
 export default {
   data() {
     return {
       userInfo: ""
     };
+  },
+  filters: {
+    dateFormat
   },
   components: {
     myDYG,
