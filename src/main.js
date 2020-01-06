@@ -4,8 +4,9 @@ import App from './App.vue'
 // 引入重置样式css
 import '@/style/reset.css'
 
-import { Toast,Icon,Uploader,Dialog,Field } from 'vant'
-Vue.use(Field)
+import { Toast,Icon,Uploader,Dialog,Field,Picker } from 'vant'
+Vue.use(Picker)
+   .use(Field)
    .use(Dialog)
    .use(Uploader)
    .use(Icon)

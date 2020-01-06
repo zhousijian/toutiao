@@ -14,10 +14,18 @@
     <van-dialog v-model="nickshow" title="修改昵称" show-cancel-button @confirm="updatenick">
       <van-field :value="user.nickname" placeholder="请输入昵称" required label="昵称" ref="nick" />
     </van-dialog>
-    <myDYG left="密码" :right="user.password" type="password"></myDYG>
-    <myDYG left="性别" :right="user.gender==='1'?'男':'女'" @click="gendershow=true"></myDYG>
-    <van-dialog v-model="gendershow" title="修改性别" show-cancel-button @confirm='updateGender'>
-      <van-field :value="user.gender==='1'?'男':'女'" placeholder="请输入性别" required label="性别" ref="gender" />
+
+    <myDYG left="密码" :right="user.password" type="password" @click="passshow=!passshow"></myDYG>
+    <van-dialog v-model="passshow" title="修改密码" show-cancel-button :before-close='beforeClose'>
+      <van-field placeholder="请输入旧密码" required label="旧密码" ref="jiupass" />
+      <van-field placeholder="请输入新密码" required label="新密码" ref="newpass" />
+    </van-dialog>
+
+    <myDYG left="性别" :right="user.gender=='0'?'女':'男'" @click="gendershow=true"></myDYG>
+    <van-dialog v-model="gendershow" title="修改性别" show-cancel-button @confirm="updateGender">
+      <!--  上面需要加事件代码@confirm="updateGender" -->
+      <!-- <van-field :value="user.gender=='1'?'男':'女'" placeholder="请输入性别" required label="性别" ref="gender" /> -->
+      <van-picker :columns="['女','男']" :default-index="user.gender" @change="onChange" />
     </van-dialog>
   </div>
 </template>
@@ -33,7 +41,9 @@ export default {
     return {
       user: "",
       nickshow: false,
-      gendershow: false
+      gendershow: false,
+      gender: "",
+      passshow : false
     };
   },
   components: {
@@ -80,35 +90,79 @@ export default {
         this.$toast.fail(res.data.message);
       }
     },
-    async updateGender(){
-        let value = this.$refs.gender.$refs.input.value
-        // console.log(value);
-        if(value == '男'){
-            let res = await editInfo(this.user.id,{gender:'1'})
-            console.log(res);
-            this.user.gender = res.data.data.gender
-        }else {
-            let res = await editInfo(this.user.id,{gender:'0'})
-            this.user.gender = res.data.data.gender
-        }
-        // if(value == '男' || value == '女'){
-        //     let res = await editInfo(this.user.id,{gender:value})
-        //     // console.log(res);
-        //     console.log(this.user);
-            
-        //     if(value == '男'){
-        //         this.user.gender = '1'
+    // eslint-disable-next-line no-unused-vars
+    onChange(picker, value, index) {
+      // this.Toast(`当前值：${value}, 当前索引：${index}`);
+      this.gender = index;
+    },
+    async updateGender() {
+      // console.log(this.gender);
 
-        //     }else {
-        //         this.user.gender = '0'
-        //     }
-        //     console.log(this.user.gender)
-        //     this.$toast.fail(res.data.message)
-            
-        // }else {
-        //     this.$toast.fail('请正确输入性别')
-        // }
-        
+      let res = await editInfo(this.user.id, { gender: this.gender });
+      // console.log(res);
+      if (res.data.message == "修改成功") {
+        this.user.gender = res.data.data.gender;
+        this.$toast.fail(res.data.message);
+      } else {
+        this.$toast.fail("修改失败");
+      }
+    },
+    // async updateGender(){
+    //     let value = this.$refs.gender.$refs.input.value
+    //     console.log(value);
+    //     if(value == '男' || value == '女'){
+    //       if(value == '男'){
+    //         let res = await editInfo(this.user.id,{gender:'1'})
+    //         console.log(res);
+    //         this.user.gender = res.data.data.gender
+    //       }else {
+    //         let res = await editInfo(this.user.id,{gender:'0'})
+    //         this.user.gender = res.data.data.gender
+    //       }
+    //     }
+    //     // if(value == '男' || value == '女'){
+    //     //     let res = await editInfo(this.user.id,{gender:value})
+    //     //     // console.log(res);
+    //     //     console.log(this.user);
+
+    //     //     if(value == '男'){
+    //     //         this.user.gender = '1'
+
+    //     //     }else {
+    //     //         this.user.gender = '0'
+    //     //     }
+    //     //     console.log(this.user.gender)
+    //     //     this.$toast.fail(res.data.message)
+
+    //     // }
+    //     // else {
+    //     //     this.$toast.fail('请正确输入性别')
+    //     // }
+
+    // }
+    async beforeClose(action,done){
+      // console.log(action);
+      // done(false)
+      if(action == 'confirm'){
+        let jiupass = this.$refs.jiupass.$refs.input.value
+        if(this.user.password == jiupass){
+          let newpass = this.$refs.newpass.$refs.input.value
+          if(/\S{3,9}/.test(newpass)){
+            // eslint-disable-next-line no-unused-vars
+            let res = await editInfo(this.user.id,{password:newpass})
+            // console.log(res);
+            done()
+          }else {
+            this.$toast.fail('请规范输入新密码')
+            done(false)
+          }
+        }else {
+          this.$toast.fail('旧密码输入不正确')
+          done(false)
+        }
+      }else {
+        done()
+      }
     }
   },
   async mounted() {
