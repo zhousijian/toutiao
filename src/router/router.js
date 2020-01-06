@@ -8,6 +8,8 @@ import VueRouter from 'vue-router'
 import Login from '@/views/login.vue'   // 登录页面
 import Personal from '@/views/personal.vue'     // 个人中心
 import EditUserInfo from '@/views/editUserInfo.vue'    // 编辑信息
+import Index from '@/views/index.vue'   // 首页
+import Register from '@/views/register.vue'  // 注册页面
 
 
 // 3挂在==挂载
@@ -32,6 +34,16 @@ let router = new VueRouter({
             name : 'editUserInfo',
             path : '/editUserInfo/:id',
             component : EditUserInfo
+        },
+        {
+            name : 'index',
+            path : '/',
+            component : Index
+        },
+        {
+            name : 'register',
+            path : '/register',
+            component : Register
         }
     ]
 })

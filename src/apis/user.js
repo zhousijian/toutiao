@@ -27,3 +27,12 @@ export const editInfo = (id,data)=>{
         data
     })
 }
+
+// 注册
+export const register = (data)=>{
+    return myaxios({
+        method : 'post',
+        url : '/register',
+        data
+    })
+}

@@ -18,7 +18,7 @@
     <myDYG left="我的跟帖" right="跟帖/回复"></myDYG>
     <myDYG left="我的收藏" right="文章/视频"></myDYG>
     <myDYG left="设置"></myDYG>
-    <mybtn class="mybtn">退出</mybtn>
+    <mybtn class="mybtn" @mysonclick='click'>退出</mybtn>
   </div>
 </template>
 
@@ -45,6 +45,14 @@ export default {
       // console.log(this.userInfo);
     }else {
       this.$router.push({name:'login'})
+    }
+  },
+  methods: {
+    click(){
+      // console.log(111);
+      localStorage.removeItem('token')
+      this.$router.push({name:'index'})
+      
     }
   }
 };
