@@ -28,7 +28,7 @@ export default {
   data () {
     return {
         user : {
-          username : '100861',
+          username : '12345',
           password : '123'
         }
     }

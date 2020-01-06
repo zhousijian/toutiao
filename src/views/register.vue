@@ -10,7 +10,7 @@
       <div class="inputs">
         <myinput placeholder="请输入账号" v-model="user.username" :content='/^(\d{5,6})$|^(1\d{10})$/' msg="用户名或者手机号输入规范"></myinput>
         <myinput placeholder="请输入密码" v-model="user.password" :content='/^\S{3,8}$/' msg="密码输入不规范"></myinput>
-        <myinput placeholder="请输入昵称" v-model="user.nickname" :content='/^\w+$/' msg="昵称输入不规范"></myinput>
+        <myinput placeholder="请输入昵称" v-model="user.nickname" :content='/^\S+$/' msg="昵称输入不规范"></myinput>
       </div>
       <p class="tips">
         没有账号？
@@ -42,13 +42,17 @@ export default {
       async register(){
         //   console.log(111);
         // this.$router.push({name : 'login'})
-        let res = await register(this.user)
+        if(/^(\d{5,6})$|^(1\d{10})$/.test(this.user.username) && /^\S{3,8}$/.test(this.user.password) && /^\S+$/.test(this.user.nickname)){
+          let res = await register(this.user)
         // console.log(res);
         if(res.data.message == '注册成功'){
             this.$toast.success('注册成功')
             this.$router.push({name : 'login'})
         }else {
             this.$toast.fail(res.data.message)
+        }
+        }else {
+          this.$toast.fail('信息输入不规范')
         }
         
           
