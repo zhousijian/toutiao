@@ -1,7 +1,7 @@
 <template>
   <div class="editUserInfo">
     <myheader title="编辑资料">
-      <van-icon name="arrow-left" slot="left" />
+      <van-icon name="arrow-left" slot="left" @click="$router.back()" />
       <!-- <van-icon name="arrow" slot="right" /> -->
     </myheader>
     <div class="touxiang">
