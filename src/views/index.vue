@@ -48,6 +48,19 @@ export default {
   components: {
     articles
   },
+  methods: {
+    async info(){
+      let res2 = await articleList({
+      pageSize: this.mydata[this.active].pageSize,
+      pageIndex: this.mydata[this.active].pageIndex,
+      category: this.mydata[this.active].id
+    });
+    // console.log(res2);
+    this.mydata[this.active].postList = res2.data.data;
+    // console.log(this.mydata);
+    // console.log(this.mydata[this.active].postList);
+    }
+  },
   async mounted() {
     // this.id = localStorage.getItem("id");
     // console.log(this.id);
@@ -69,32 +82,34 @@ export default {
     });
     // console.log(this.mydata);
 
-    // 获取文章列表
-    let res2 = await articleList({
-      pageSize: this.mydata[this.active].pageSize,
-      pageIndex: this.mydata[this.active].pageIndex,
-      category: this.mydata[this.active].id
-    });
-    // console.log(res2);
-    this.mydata[this.active].postList = res2.data.data;
-    // console.log(this.mydata);
-    // console.log(this.mydata[this.active].postList);
+    // // 获取文章列表
+    // let res2 = await articleList({
+    //   pageSize: this.mydata[this.active].pageSize,
+    //   pageIndex: this.mydata[this.active].pageIndex,
+    //   category: this.mydata[this.active].id
+    // });
+    // // console.log(res2);
+    // this.mydata[this.active].postList = res2.data.data;
+    // // console.log(this.mydata);
+    // // console.log(this.mydata[this.active].postList);
+    this.info()
   },
   watch: {
     async active(){
       // console.log(this.active);
     // 获取文章列表
-    if(this.mydata[this.active].postList.length == 0){
-      let res2 = await articleList({
-      pageSize: this.mydata[this.active].pageSize,
-      pageIndex: this.mydata[this.active].pageIndex,
-      category: this.mydata[this.active].id
-    });
-    // console.log(res2);
-    this.mydata[this.active].postList = res2.data.data;
-    // console.log(this.mydata);
-    // console.log(this.mydata[this.active].postList);
-    }
+    // if(this.mydata[this.active].postList.length == 0){
+    //   let res2 = await articleList({
+    //   pageSize: this.mydata[this.active].pageSize,
+    //   pageIndex: this.mydata[this.active].pageIndex,
+    //   category: this.mydata[this.active].id
+    // });
+    // // console.log(res2);
+    // this.mydata[this.active].postList = res2.data.data;
+    // // console.log(this.mydata);
+    // // console.log(this.mydata[this.active].postList);
+    // }
+    this.info()
       
     }
   }
