@@ -10,7 +10,7 @@
         <span>搜索新闻</span>
       </div>
       <div class="user">
-        <van-icon name="manager" />
+        <van-icon name="manager" @click="$router.push({path : `/personal/${id}`})" />
       </div>
     </header>
 
@@ -22,8 +22,18 @@
         <van-tab v-for="(v1,i1) in mydata" :key="i1" :title="v1.name">
           <!-- <articles v-for="(v2,i2) in v1.postList" :key="i2" :DATA="v2"></articles> -->
           <!-- <articles :DATA="mydata[active].postList"></articles> -->
-          <van-list v-model="v1.loading" :finished="v1.finished" finished-text="没有更多了" @load="onLoad" :immediate-check="false" :offset="10">
-            <articles v-for="(v2,i2) in v1.postList" :key="i2" :DATA="v2"></articles>
+          <van-list
+            v-model="v1.loading"
+            :finished="v1.finished"
+            finished-text="没有更多了"
+            @load="onLoad"
+            :immediate-check="false"
+            :offset="10"
+          >
+            <van-pull-refresh v-model="v1.isLoading" @refresh="onRefresh" success-text="刷新成功">
+              <articles v-for="(v2,i2) in v1.postList" :key="i2" :DATA="v2"></articles>
+            </van-pull-refresh>
+            <!-- <articles v-for="(v2,i2) in v1.postList" :key="i2" :DATA="v2"></articles> -->
           </van-list>
         </van-tab>
       </van-tabs>
@@ -43,42 +53,68 @@ import articles from "@/components/articles";
 export default {
   data() {
     return {
-      // id: "",
+      id: localStorage.getItem("id"),
       active: localStorage.getItem("token") ? 1 : 0,
-      mydata: ""
+      mydata: {}
     };
   },
   components: {
     articles
   },
   methods: {
+    // 下来刷新
+    onRefresh() {
+      // console.log(111);
+      this.mydata[this.active].pageIndex = 1;
+      this.mydata[this.active].postList.length = 0;
+      // setTimeout(() => {
+      this.info();
+      // this.mydata[this.active].finished = false
 
-    onLoad(){
-      this.mydata[this.active].pageIndex ++
-      setTimeout(() => {
-        this.info()
-      }, 3000);
+      // }, 1000);
+
+      // this.mydata[this.active].isLoading = false
+
+      this.mydata[this.active].finished = false;
+      // console.log(this.mydata[this.active].pageIndex);
+      // console.log(222);
+    },
+
+    // 上拉列表
+    onLoad() {
+      this.mydata[this.active].pageIndex++;
+      // setTimeout(() => {
+      this.info();
+      // }, 1000);
       // console.log(this.mydata);
-      
+      // console.log(111);
     },
 
     async info() {
+      
       let res2 = await articleList({
         pageSize: this.mydata[this.active].pageSize,
         pageIndex: this.mydata[this.active].pageIndex,
         category: this.mydata[this.active].id
       });
 
-      this.mydata[this.active].loading = false
+      if (this.mydata[this.active].loading) {
+        this.mydata[this.active].loading = false;
+      }
 
-      if(res2.data.data.length < this.mydata[this.active].pageSize){
-        this.mydata[this.active].finished = true
+      if (this.mydata[this.active].isLoading) {
+        this.mydata[this.active].isLoading = false;
+      }
+
+      if (res2.data.data.length < this.mydata[this.active].pageSize) {
+        this.mydata[this.active].finished = true;
       }
 
       // console.log(res2);
       this.mydata[this.active].postList.push(...res2.data.data);
       // console.log(this.mydata);
       // console.log(this.mydata[this.active].postList);
+      // console.log(this.mydata[this.active]);
     }
   },
   async mounted() {
@@ -98,8 +134,9 @@ export default {
         postList: [], // 这个栏目的新闻列表数据
         pageSize: 5, // 这个栏目每页所显示的记录数
         pageIndex: 1, // 这个栏目当前的页码
-        loading : false,  // 这个栏目的加载状态
-        finished : false  // 这个栏目的数据是否加载完成
+        loading: false, // 这个栏目的加载状态
+        finished: false, // 这个栏目的数据是否加载完成
+        isLoading: false // 这个栏目是否正在下拉刷新
       };
     });
     // console.log(this.mydata);

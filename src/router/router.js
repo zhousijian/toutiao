@@ -10,6 +10,7 @@ import Personal from '@/views/personal.vue'     // 个人中心
 import EditUserInfo from '@/views/editUserInfo.vue'    // 编辑信息
 import Index from '@/views/index.vue'   // 首页
 import Register from '@/views/register.vue'  // 注册页面
+import Articlexq from '@/views/articlexq.vue'   // 新闻详情页面
 
 
 // 3挂在==挂载
@@ -44,6 +45,11 @@ let router = new VueRouter({
             name : 'register',
             path : '/register',
             component : Register
+        },
+        {
+            name : 'articlexq',
+            path : '/articlexq/:id',
+            component : Articlexq
         }
     ]
 })

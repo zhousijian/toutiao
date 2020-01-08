@@ -36,3 +36,17 @@ export const register = (data)=>{
         data
     })
 }
+
+// 关注
+export const guanzhuyh = (id)=>{
+    return myaxios({
+        url : `/user_follows/${id}`
+    })
+}
+
+// 取消关注
+export const qxguanzhu = (id)=>{
+    return myaxios({
+        url : `/user_unfollow/${id}`
+    })
+}

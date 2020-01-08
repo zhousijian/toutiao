@@ -7,3 +7,17 @@ export const articleList = (params)=>{
         params
     })
 }
+
+// 新闻详情
+export const articlexq = (id)=>{
+    return myaxios({
+        url : `/post/${id}`
+    })
+}
+
+// 点赞
+export  const dzarticle = (id)=>{
+    return myaxios({
+        url : `/post_like/${id}`
+    })
+}

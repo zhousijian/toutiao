@@ -1,5 +1,5 @@
 <template>
-  <div class="single" v-if="DATA.type==1 && DATA.cover.length < 3">
+  <div class="single" v-if="DATA.type==1 && DATA.cover.length < 3" @click="$router.push({path : `/articlexq/${DATA.id}`})">
     <div class="left">
       <p class="content">{{DATA.title}}</p>
       <p class="info">
@@ -11,7 +11,7 @@
       <img :src="DATA.cover[0].url" alt />
     </div>
   </div>
-  <div class="single" v-else-if="DATA.type==2">
+  <div class="single" v-else-if="DATA.type==2" @click="$router.push({path : `/articlexq/${DATA.id}`})">
     <div class="left">
       <p class="content">{{DATA.title}}</p>
       <div class="img2">
@@ -26,7 +26,7 @@
       </p>
     </div>
   </div>
-  <div class="single" v-else-if="DATA.type==1 && DATA.cover.length >= 3">
+  <div class="single" v-else-if="DATA.type==1 && DATA.cover.length >= 3" @click="$router.push({path : `/articlexq/${DATA.id}`})">
     <div class="left">
       <p class="content">{{DATA.title}}</p>
       <div class="img3">
