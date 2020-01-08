@@ -82,12 +82,14 @@ export default {
 
     // 上拉列表
     onLoad() {
-      this.mydata[this.active].pageIndex++;
+      if(this.mydata[this.active].isLoading == false){
+        this.mydata[this.active].pageIndex++;
       // setTimeout(() => {
       this.info();
       // }, 1000);
       // console.log(this.mydata);
       // console.log(111);
+      }
     },
 
     async info() {
