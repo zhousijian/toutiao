@@ -18,10 +18,13 @@
 
     <!--    导航栏    -->
     <nav>
-      <van-tabs v-model="active" sticky swipeable :offset-top=60>
+      <van-tabs v-model="active" sticky swipeable :offset-top="60">
         <van-tab v-for="(v1,i1) in mydata" :key="i1" :title="v1.name">
-          <articles v-for="(v2,i2) in v1.postList" :key="i2" :DATA="v2" ></articles>
+          <!-- <articles v-for="(v2,i2) in v1.postList" :key="i2" :DATA="v2"></articles> -->
           <!-- <articles :DATA="mydata[active].postList"></articles> -->
+          <van-list v-model="v1.loading" :finished="v1.finished" finished-text="没有更多了" @load="onLoad" :immediate-check="false" :offset="10">
+            <articles v-for="(v2,i2) in v1.postList" :key="i2" :DATA="v2"></articles>
+          </van-list>
         </van-tab>
       </van-tabs>
     </nav>
@@ -49,16 +52,33 @@ export default {
     articles
   },
   methods: {
-    async info(){
+
+    onLoad(){
+      this.mydata[this.active].pageIndex ++
+      setTimeout(() => {
+        this.info()
+      }, 3000);
+      // console.log(this.mydata);
+      
+    },
+
+    async info() {
       let res2 = await articleList({
-      pageSize: this.mydata[this.active].pageSize,
-      pageIndex: this.mydata[this.active].pageIndex,
-      category: this.mydata[this.active].id
-    });
-    // console.log(res2);
-    this.mydata[this.active].postList = res2.data.data;
-    // console.log(this.mydata);
-    // console.log(this.mydata[this.active].postList);
+        pageSize: this.mydata[this.active].pageSize,
+        pageIndex: this.mydata[this.active].pageIndex,
+        category: this.mydata[this.active].id
+      });
+
+      this.mydata[this.active].loading = false
+
+      if(res2.data.data.length < this.mydata[this.active].pageSize){
+        this.mydata[this.active].finished = true
+      }
+
+      // console.log(res2);
+      this.mydata[this.active].postList.push(...res2.data.data);
+      // console.log(this.mydata);
+      // console.log(this.mydata[this.active].postList);
     }
   },
   async mounted() {
@@ -76,8 +96,10 @@ export default {
       return {
         ...value, // 展开对象，需要拿到里面的成员
         postList: [], // 这个栏目的新闻列表数据
-        pageSize: 10, // 这个栏目每页所显示的记录数
-        pageIndex: 1 // 这个栏目当前的页码
+        pageSize: 5, // 这个栏目每页所显示的记录数
+        pageIndex: 1, // 这个栏目当前的页码
+        loading : false,  // 这个栏目的加载状态
+        finished : false  // 这个栏目的数据是否加载完成
       };
     });
     // console.log(this.mydata);
@@ -92,34 +114,33 @@ export default {
     // this.mydata[this.active].postList = res2.data.data;
     // // console.log(this.mydata);
     // // console.log(this.mydata[this.active].postList);
-    this.info()
+    this.info();
   },
   watch: {
-    async active(){
+    async active() {
       // console.log(this.active);
-    // 获取文章列表
-    // if(this.mydata[this.active].postList.length == 0){
-    //   let res2 = await articleList({
-    //   pageSize: this.mydata[this.active].pageSize,
-    //   pageIndex: this.mydata[this.active].pageIndex,
-    //   category: this.mydata[this.active].id
-    // });
-    // // console.log(res2);
-    // this.mydata[this.active].postList = res2.data.data;
-    // // console.log(this.mydata);
-    // // console.log(this.mydata[this.active].postList);
-    // }
-    this.info()
-      
+      // 获取文章列表
+      // if(this.mydata[this.active].postList.length == 0){
+      //   let res2 = await articleList({
+      //   pageSize: this.mydata[this.active].pageSize,
+      //   pageIndex: this.mydata[this.active].pageIndex,
+      //   category: this.mydata[this.active].id
+      // });
+      // // console.log(res2);
+      // this.mydata[this.active].postList = res2.data.data;
+      // // console.log(this.mydata);
+      // // console.log(this.mydata[this.active].postList);
+      // }
+      this.info();
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.index {
-  height: 3000px;
-}
+// .index {
+//   height: 3000px;
+// }
 header {
   display: flex;
   position: fixed;
