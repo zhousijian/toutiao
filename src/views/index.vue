@@ -90,7 +90,7 @@ export default {
       pageIndex: this.mydata[this.active].pageIndex,
       category: this.mydata[this.active].id
     });
-    console.log(res2);
+    // console.log(res2);
     this.mydata[this.active].postList = res2.data.data;
     // console.log(this.mydata);
     // console.log(this.mydata[this.active].postList);
