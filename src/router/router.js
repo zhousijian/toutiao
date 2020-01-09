@@ -13,6 +13,7 @@ import Register from '@/views/register.vue'  // 注册页面
 import Articlexq from '@/views/articlexq.vue'   // 新闻详情页面
 import Myfollow from '@/views/myfollow.vue'   // 我的关注
 import Scarticle from '@/views/SCarticle.vue'   // 我的收藏
+import Comment from '@/views/comment.vue'   // 评论页面
 
 
 // 3挂在==挂载
@@ -62,6 +63,11 @@ let router = new VueRouter({
             name : 'scarticle',
             path : '/scarticle/:id',
             component : Scarticle
+        },
+        {
+            name : 'comment',
+            path : '/comment/:id',
+            component : Comment
         }
     ]
 })

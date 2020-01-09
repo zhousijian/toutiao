@@ -28,3 +28,11 @@ export const scarticle = (id)=>{
         url : `/post_star/${id}`
     })
 }
+
+// 评论列表
+export const commentlist = (id,params)=>{
+    return myaxios({
+        url : `/post_comment/${id}`,
+        params
+    })
+}
