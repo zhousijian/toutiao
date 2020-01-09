@@ -120,7 +120,7 @@ export default {
     position: relative;
     > em {
       position: absolute;
-      right: 0;
+      right: 15px;
       top: -5px;
       font-size: 10px;
       background-color: #f00;
