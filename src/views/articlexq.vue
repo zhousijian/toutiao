@@ -13,11 +13,11 @@
         <span>{{mydata.user.nickname || mydata.users}}</span> &nbsp;&nbsp;
         <span>{{mydata.create_date}}</span>
       </div>
-      <div class="content" v-html="mydata.content" v-if="mydata.type == 1"></div>
+      <div class="content1" v-html="mydata.content" v-if="mydata.type == 1"></div>
       <video :src="mydata.content" v-if="mydata.type == 2" controls></video>
       <div class="opt">
         <span class="like"  @click="dianzan" :class="{dianzan:mydata.has_like}">
-          <van-icon name="good-job-o" />{{mydata.has_like?`点赞(${mydata.like_length})`:'点赞'}}
+          <van-icon name="good-job-o" />{{`点赞(${mydata.like_length})`}}
         </span>
         <span class="chat">
           <van-icon name="chat" class="w" />微信
@@ -79,7 +79,7 @@ export default {
       },
       async dianzan(){
           let res = await dzarticle(this.mydata.id)
-          console.log(res);
+          // console.log(res);
         if(res.data.message == '点赞成功'){
             ++this.mydata.like_length
         }else {
@@ -142,12 +142,18 @@ export default {
     color: #999;
     font-size: 13px;
   }
-  .content {
+  .content1 {
     text-indent: 2em;
     line-height: 24px;
     font-size: 15px;
     padding-bottom: 30px;
     width: 100%;
+    /deep/.photo {
+      /deep/a{
+        display: flex;
+        flex-direction: column
+      }
+    }
   }
 }
 .opt {
