@@ -40,12 +40,14 @@
       </div>
       <div class="more">更多跟帖</div>
     </div>
+    <mycommentFooter :post='mydata'></mycommentFooter>
   </div>
 </template>
 
 <script>
 import { articlexq,dzarticle } from '@/apis/article'
 import { guanzhuyh,qxguanzhu } from '@/apis/user'
+import mycommentFooter from '@/components/mycommentFooter'
 export default {
     data () {
         return {
@@ -63,6 +65,9 @@ export default {
     this.mydata = res.data.data
     // console.log(this.mydata);
     
+  },
+  components: {
+    mycommentFooter
   },
   methods: {
       async guanzhu(){
@@ -225,5 +230,16 @@ export default {
     margin: 20px auto;
     font-size: 13px;
   }
+}
+.keeps {
+  border-top: 5px solid #ddd;
+  padding: 0 15px 50px;
+  > h2 {
+    line-height: 50px;
+    text-align: center;
+  }
+}
+/deep/.addcomment {
+  background-color: #ccc;
 }
 </style>

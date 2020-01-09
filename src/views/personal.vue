@@ -14,9 +14,9 @@
         <span class="iconfont iconjiantou1"></span>
       </div>
     </router-link>
-    <myDYG left="我的关注" right="关注的用户"></myDYG>
+    <myDYG left="我的关注" right="关注的用户" @click="$router.push({name : 'myfollow'})"></myDYG>
     <myDYG left="我的跟帖" right="跟帖/回复"></myDYG>
-    <myDYG left="我的收藏" right="文章/视频"></myDYG>
+    <myDYG left="我的收藏" right="文章/视频" @click="$router.push({name : 'scarticle'})"></myDYG>
     <myDYG left="设置"></myDYG>
     <mybtn class="mybtn" @mysonclick='click'>退出</mybtn>
   </div>

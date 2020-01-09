@@ -50,3 +50,17 @@ export const qxguanzhu = (id)=>{
         url : `/user_unfollow/${id}`
     })
 }
+
+// 用户关注列表
+export const userfollowlist = ()=>{
+    return myaxios({
+        url : `/user_follows`
+    })
+}
+
+// 收藏文章列表
+export const scarticlelist = ()=>{
+    return myaxios({
+        url : '/user_star'
+    })
+}

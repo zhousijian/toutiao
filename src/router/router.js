@@ -11,6 +11,8 @@ import EditUserInfo from '@/views/editUserInfo.vue'    // 编辑信息
 import Index from '@/views/index.vue'   // 首页
 import Register from '@/views/register.vue'  // 注册页面
 import Articlexq from '@/views/articlexq.vue'   // 新闻详情页面
+import Myfollow from '@/views/myfollow.vue'   // 我的关注
+import Scarticle from '@/views/SCarticle.vue'   // 我的收藏
 
 
 // 3挂在==挂载
@@ -50,6 +52,16 @@ let router = new VueRouter({
             name : 'articlexq',
             path : '/articlexq/:id',
             component : Articlexq
+        },
+        {
+            name : 'myfollow',
+            path : '/myfollow',
+            component : Myfollow
+        },
+        {
+            name : 'scarticle',
+            path : '/scarticle/:id',
+            component : Scarticle
         }
     ]
 })

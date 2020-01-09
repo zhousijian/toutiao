@@ -21,3 +21,10 @@ export  const dzarticle = (id)=>{
         url : `/post_like/${id}`
     })
 }
+
+// 收藏文章
+export const scarticle = (id)=>{
+    return myaxios({
+        url : `/post_star/${id}`
+    })
+}
