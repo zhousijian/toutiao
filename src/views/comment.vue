@@ -13,48 +13,94 @@
             <p>{{v.user.nickname}}</p>
             <span>{{v.user.create_date}}</span>
           </div>
-          <span>回复</span>
+          <span @click="huifu(v)">回复</span>
         </div>
         <commentItem v-if="v.parent" :parent='v.parent'></commentItem>
         <div class="text">{{v.content}}</div>
       </div>
+    <!-- <mycommentFooter :post='v'></mycommentFooter> -->
+
     </div>
+    <mycommentFooter :post='article' @fabuchenggong='fabuchenggong' :obj=commentObj></mycommentFooter>
   </div>
 </template>
 
 <script>
 import myheader from "@/components/myheader.vue";
-import { commentlist } from '@/apis/article'
+import { commentlist,articlexq } from '@/apis/article'
 import commentItem from '@/components/commentItem'
+import mycommentFooter from '@/components/mycommentFooter'
 export default {
     data () {
         return {
-            mydata : {}
+            mydata : [],
+            article : {},
+            commentObj : null
         }
     },
   components: {
-    myheader,commentItem
+    myheader,commentItem,mycommentFooter
   },
   async mounted () {
+    
+    this.init()
+
+    let res2 = await articlexq(this.$route.params.id)
+    // console.log(res2);
+    this.article = res2.data.data
+  },
+  methods: {
+
+    // 封装获取评论列表
+    async init(){
       let res = await commentlist(this.$route.params.id,{
           pageSize : 40,
           pageIndex : 1
       })
-    //   console.log(res);
+      // console.log(res);
     this.mydata = res.data.data.length>0?res.data.data:this.mydata
 
     this.mydata = this.mydata.map(value => {
         value.user.head_img = 'http://127.0.0.1:3000' + value.user.head_img
         return value
     })
-    console.log(this.mydata);
-    
-      
+    // console.log(this.mydata);
+    },
+
+
+  //   async fabupinglun(value){
+  //     // console.log(value);
+  //     // console.log(this.$route.params.id);
+  //     let res = await issuecomment(this.$route.params.id,{content:value})
+  //     // console.log(res);
+  //     if(res.data.message == '评论发布成功'){
+  //       window.scrollTo(0,0)
+  //       this.isFocus = false
+  //     }
+  //     this.$toast.fail(res.data.message)
+  //   }
+
+  // 刷新，回到顶位
+    fabuchenggong(){
+      this.init()
+      window.scrollTo(0,0)
+    },
+
+    huifu(value){
+      this.commentObj = value
+    }
+
+
+
+
   }
 };
 </script>
 
 <style lang='less' scoped>
+.comments {
+  margin-bottom: 52px;
+}
 .lists {
   border-top: 5px solid #ddd;
   padding: 0 15px;
