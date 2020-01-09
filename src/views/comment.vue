@@ -87,6 +87,7 @@ export default {
     },
 
     huifu(value){
+      // console.log(this.mydata);
       this.commentObj = value
     }
 

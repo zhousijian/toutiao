@@ -46,10 +46,10 @@ export default {
       this.$toast.fail(res.data.message);
     },
     quxiao() {
-      console.log(123);
+      // console.log(123);
       
       this.isFocus = false;
-      console.log(this.isFocus);
+      // console.log(this.isFocus);
       
       this.$emit('reset')
     },
@@ -63,9 +63,16 @@ export default {
       let data = {
         content : this.$refs.commtext.value
       }
+      // console.log(this.obj)
+      
       if(this.obj){
-        data.parent_id = this.post.id
+        // console.log(this.obj.id);
+        // console.log(this.post.id);
+        
+        data.parent_id = this.obj.id
       }
+      // console.log(data);
+      
       let res = await issuecomment(this.post.id,data)
       // console.log(res);
       
@@ -96,6 +103,7 @@ export default {
         this.$emit("fabuchenggong");
       }
       this.$toast.fail(res.data.message);
+
     }
   },
   watch: {
