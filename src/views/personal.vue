@@ -19,6 +19,7 @@
     <myDYG left="我的收藏" right="文章/视频" @click="$router.push({name : 'scarticle'})"></myDYG>
     <myDYG left="设置"></myDYG>
     <mybtn class="mybtn" @mysonclick='click'>退出</mybtn>
+    <mybtn class="mybtn" @mysonclick="$router.push({name : 'index'})">返回首页</mybtn>
   </div>
 </template>
 

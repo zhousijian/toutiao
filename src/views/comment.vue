@@ -8,13 +8,14 @@
     <div class="lists" v-for="(v,i) in mydata" :key="i">
       <div class="item">
         <div class="head">
-          <img src="" alt />
+          <img :src="v.user.head_img" alt />
           <div>
             <p>{{v.user.nickname}}</p>
             <span>{{v.user.create_date}}</span>
           </div>
           <span>回复</span>
         </div>
+        <commentItem v-if="v.parent" :parent='v.parent'></commentItem>
         <div class="text">{{v.content}}</div>
       </div>
     </div>
@@ -24,6 +25,7 @@
 <script>
 import myheader from "@/components/myheader.vue";
 import { commentlist } from '@/apis/article'
+import commentItem from '@/components/commentItem'
 export default {
     data () {
         return {
@@ -31,7 +33,7 @@ export default {
         }
     },
   components: {
-    myheader
+    myheader,commentItem
   },
   async mounted () {
       let res = await commentlist(this.$route.params.id,{
@@ -42,10 +44,10 @@ export default {
     this.mydata = res.data.data.length>0?res.data.data:this.mydata
 
     this.mydata = this.mydata.map(value => {
-        value.head_img = 'http://127.0.0.1:3000' + value.head_img
+        value.user.head_img = 'http://127.0.0.1:3000' + value.user.head_img
         return value
     })
-    // console.log(this.mydata);
+    console.log(this.mydata);
     
       
   }
