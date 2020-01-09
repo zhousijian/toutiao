@@ -21,7 +21,7 @@
     <!-- <mycommentFooter :post='v'></mycommentFooter> -->
 
     </div>
-    <mycommentFooter :post='article' @fabuchenggong='fabuchenggong' :obj=commentObj></mycommentFooter>
+    <mycommentFooter :post='article' @fabuchenggong='fabuchenggong' :obj=commentObj @reset='commentObj=null'></mycommentFooter>
   </div>
 </template>
 

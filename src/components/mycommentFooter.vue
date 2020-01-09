@@ -37,7 +37,7 @@ export default {
     //   获取焦点时触发
     handlerFocus() {
       this.isFocus = !this.isFocus;
-      this.$refs.commtext.focus();
+      // this.$refs.commtext.focus();
     },
     async scwz() {
       let res = await scarticle(this.post.id);
@@ -46,7 +46,12 @@ export default {
       this.$toast.fail(res.data.message);
     },
     quxiao() {
-      this.isFocus = !this.isFocus;
+      console.log(123);
+      
+      this.isFocus = false;
+      console.log(this.isFocus);
+      
+      this.$emit('reset')
     },
     async myclick() {   // 方法一要加一个value形参
       // this.$emit('click',value)
@@ -62,7 +67,7 @@ export default {
         data.parent_id = this.post.id
       }
       let res = await issuecomment(this.post.id,data)
-      console.log(res);
+      // console.log(res);
       
 
 
@@ -79,10 +84,13 @@ export default {
       // }
       // console.log(res);
 
-      
+
       if (res.data.message == "评论发布成功") {
         this.isFocus = false;
         // window.scrollTo(0,0)
+
+        // 清空文本框
+        this.$refs.commtext.value = ''
 
         // 告诉父组件，评论发布成功了可以进行数据刷新
         this.$emit("fabuchenggong");
@@ -92,8 +100,12 @@ export default {
   },
   watch: {
     obj() {
+      // console.log(this.obj);
+      
       // console.log(111);
-      this.isFocus = true;
+      if(this.obj){
+        this.isFocus = true;
+      }
       // console.log(this.post.id);
     }
   }
