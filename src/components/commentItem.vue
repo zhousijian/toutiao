@@ -1,12 +1,12 @@
 <template>
   <div class="commentItem">
-      <mycommentitem v-if="parent.parent" :parent='parent.parent'></mycommentitem>
+      <mycommentitem v-if="parent.parent" :parent='parent.parent' @zichuanfu1='zichuanfu'></mycommentitem>
       <div class="top">
           <div class="left">
               <span>{{parent.user.nickname}}</span> &nbsp;&nbsp;&nbsp;
               <span>2分钟前</span>
           </div>
-          <span>回复</span>
+          <span @click="zichuanfu(parent)">回复</span>
       </div>
       <div class="bottom">{{parent.content}}</div>
   </div>
@@ -15,7 +15,14 @@
 <script>
 export default {
     name : 'mycommentitem',
-    props:['parent']
+    props:['parent'],
+    methods: {
+        zichuanfu(data){
+            console.log(data);
+            this.$emit('zichuanfu1',data)
+            
+        }
+    }
 }
 </script>
 

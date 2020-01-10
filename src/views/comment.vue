@@ -15,7 +15,7 @@
           </div>
           <span @click="huifu(v)">回复</span>
         </div>
-        <commentItem v-if="v.parent" :parent='v.parent'></commentItem>
+        <commentItem v-if="v.parent" :parent='v.parent' @zichuanfu1='huifu'></commentItem>
         <div class="text">{{v.content}}</div>
       </div>
     <!-- <mycommentFooter :post='v'></mycommentFooter> -->
