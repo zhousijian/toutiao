@@ -2,13 +2,8 @@
   <div class="search">
     <div class="header">
       <span class="iconfont iconjiantou2" @click="$router.back()"></span>
-      <van-search
-        v-model="userKey"
-        placeholder="请输入搜索关键词"
-        shape="round"
-      >
-      </van-search>
-      <div @click="onSearch(userKey)">搜索</div>
+      <van-search v-model="userKey" placeholder="请输入搜索关键词" shape="round"></van-search>
+      <div @click="onSearch(userKey)" class="onsearch">搜索</div>
     </div>
     <div class="historyList">
       <h2>历史记录</h2>
@@ -25,21 +20,21 @@
 </template>
 
 <script>
-import { searchArticle } from '@/apis/article'
+import { searchArticle } from "@/apis/article";
 export default {
-  data(){
+  data() {
     return {
-      userKey:'',
-      mydata : [],
-      searchs : []  // 存储搜索历史的记录
-    }
+      userKey: "",
+      mydata: [],
+      searchs: [] // 存储搜索历史的记录
+    };
   },
-  mounted () {
+  mounted() {
     // 聚焦
-    document.querySelector('.van-field__control').focus()
+    document.querySelector(".van-field__control").focus();
 
-    if(localStorage.getItem('sch')){
-      this.searchs = JSON.parse(localStorage.getItem('sch'))
+    if (localStorage.getItem("sch")) {
+      this.searchs = JSON.parse(localStorage.getItem("sch"));
       // if(this.searchs.indexOf(this.userKey) == 0){
       //   let index = this.searchs.indexOf(this.userKey)
       //   this.searchs.splice(index,1)
@@ -52,70 +47,74 @@ export default {
       // this.searchs = JSON.parse(localStorage.getItem('sch'))
     }
     // console.log(this.searchs);
-    
-    
   },
-  methods:{
-    async onSearch(value){
+  methods: {
+    async onSearch(value) {
+     if(this.userKey.trim() == ''){
+      return
+     }
       let res = await searchArticle({
-        keyword : value
-      })
+        keyword: value
+      });
       // console.log(this.userKey);
       // console.log(res);
-      this.mydata = res.data.data
+      this.mydata = res.data.data;
       // this.searchs.unshift(this.userKey)
       // console.log(this.searchs);
       // localStorage.setItem('sch',JSON.stringify(this.searchs))
       // console.log(this.searchs);
-      
+
       // console.log(this.searchs.indexOf(value));
-      
-      if(this.searchs.indexOf(value) !== -1){
-        let index = this.searchs.indexOf(value)
+
+      if (this.searchs.indexOf(value) !== -1) {
+        let index = this.searchs.indexOf(value);
         // console.log(this.searchs);
         // console.log(JSON.parse(localStorage.getItem('sch')));
         // console.log(index);
-        this.searchs.splice(index,1)
-        this.searchs.unshift(value)
-        localStorage.setItem('sch',JSON.stringify(this.searchs))
-      }else {
-        this.searchs.unshift(value)
-        localStorage.setItem('sch',JSON.stringify(this.searchs))
+        this.searchs.splice(index, 1);
+        this.searchs.unshift(value);
+        localStorage.setItem("sch", JSON.stringify(this.searchs));
+      } else {
+        this.searchs.unshift(value);
+        localStorage.setItem("sch", JSON.stringify(this.searchs));
       }
-    },
+    }
     // search(v){
     //   console.log(v);
-      
+
     // }
   }
-}
+};
 </script>
 
 <style lang='less' scoped>
-  .header{
-    display: flex;
-    height: 50px;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px;
-    border-bottom: 1px solid #ccc;
-    .van-search{
-      flex: 1;
-      padding: 5px 12px;
-    }
+.header {
+  display: flex;
+  height: 50px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom: 1px solid #ccc;
+  .van-search {
+    flex: 1;
+    padding: 5px 12px;
   }
-  .historyList{
-    padding:10px;
-    border-bottom: 1px solid #ccc;
-    h2{
-      line-height: 40px;
-      font-weight: bold;
-    }
-    > a {
-      display: block;
-      text-decoration: underline;
-      line-height: 30px;
-      color:#666;
-    }
+}
+.historyList {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  h2 {
+    line-height: 40px;
+    font-weight: bold;
   }
+  > a {
+    display: block;
+    text-decoration: underline;
+    line-height: 30px;
+    color: #666;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
 </style>
