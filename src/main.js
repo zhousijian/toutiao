@@ -4,7 +4,7 @@ import App from './App.vue'
 // 引入重置样式css
 import '@/style/reset.css'
 
-import { Toast,Icon,Uploader,Dialog,Field,Picker,Tab,Tabs,List,PullRefresh } from 'vant'
+import { Toast,Icon,Uploader,Dialog,Field,Picker,Tab,Tabs,List,PullRefresh,Search } from 'vant'
 Vue.use(PullRefresh)
    .use(List)
    .use(Tab)
@@ -14,7 +14,8 @@ Vue.use(PullRefresh)
    .use(Dialog)
    .use(Uploader)
    .use(Icon)
-   .use(Toast);
+   .use(Toast)
+   .use(Search);
 
 // 引入路由组件
 import router from '@/router/router.js'

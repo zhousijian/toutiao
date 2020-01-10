@@ -14,6 +14,8 @@ import Articlexq from '@/views/articlexq.vue'   // 新闻详情页面
 import Myfollow from '@/views/myfollow.vue'   // 我的关注
 import Scarticle from '@/views/SCarticle.vue'   // 我的收藏
 import Comment from '@/views/comment.vue'   // 评论页面
+import LmManager from '@/views/lmManager.vue'   // 栏目管理
+import Search from '@/views/search.vue'     // 搜索页面
 
 
 // 3挂在==挂载
@@ -68,6 +70,16 @@ let router = new VueRouter({
             name : 'comment',
             path : '/comment/:id',
             component : Comment
+        },
+        {
+            name : 'lmManager',
+            path : '/lmManager',
+            component : LmManager
+        },
+        {
+            name : 'search',
+            path : '/search',
+            component : Search
         }
     ]
 })

@@ -45,3 +45,11 @@ export const issuecomment = (id,data)=>{
         data
     })
 }
+
+// 搜索文章/post_search
+export const searchArticle = (params)=>{
+    return myaxios({
+        url : '/post_search',
+        params
+    })
+}

@@ -5,7 +5,7 @@
       <div class="login">
         <span class="iconfont iconnew"></span>
       </div>
-      <div class="seach">
+      <div class="seach" @click="$router.push({name : 'search'})">
         <van-icon name="search" class="seh" />
         <span>搜索新闻</span>
       </div>
@@ -37,8 +37,8 @@
           </van-list>
         </van-tab>
       </van-tabs>
+      <van-icon name="plus" @click="$router.push({name : 'lmManager'})" />
     </nav>
-
     <!--    主体内容    -->
     <main>
       <!-- <articles :DATA='mydata[active].postList'></articles> -->
@@ -62,6 +62,7 @@ export default {
     articles
   },
   methods: {
+
     // 下来刷新
     onRefresh() {
       // console.log(111);
@@ -123,11 +124,20 @@ export default {
     // this.id = localStorage.getItem("id");
     // console.log(this.id);
 
-    // 获取栏目列表
+    if(localStorage.getItem('list')){
+      this.mydata = JSON.parse(localStorage.getItem('list'))
+      if(localStorage.getItem('token')){
+        this.mydata.unshift({id:0,name:'关注',is_top:1},{id:999,name:'头条',is_top:1})
+      }else {
+        this.mydata.unshift({id:999,name:'头条',is_top:1})
+      }
+    }else {
+      // 获取栏目列表
     let res = await categoryList();
     // console.log(res);
     this.mydata = res.data.data;
     // console.log(this.mydata);
+    }
 
     // 数据改造
     this.mydata = this.mydata.map(value => {
@@ -225,9 +235,29 @@ nav {
   // margin-top: 100px;
   top: 100px;
   width: 100%;
+  display: flex;
   // margin-top: 60px;
   // background-color: rgb(19, 17, 17);
   /deep/.van-ellipsis {
+    background-color: rgb(189, 189, 189);
+  }
+  /deep/.van-sticky {
+    width: 90vw;
+  }
+  /deep/.van-tab__text {
+    font-size:18px;
+  }
+  /deep/.van-icon-plus {
+    position: fixed;
+    display: inline-block;
+    line-height: 44px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    width: 10vw;
+    height: 44px;
+    z-index: 1000;
+    right: 0;
     background-color: rgb(189, 189, 189);
   }
 }
